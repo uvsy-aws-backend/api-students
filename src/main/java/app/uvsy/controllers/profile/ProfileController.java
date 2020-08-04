@@ -9,6 +9,7 @@ import org.github.serverless.api.annotations.HttpMethod;
 import org.github.serverless.api.annotations.handler.Handler;
 import org.github.serverless.api.annotations.parameters.BodyParameter;
 import org.github.serverless.api.annotations.parameters.PathParameter;
+import org.github.serverless.api.annotations.parameters.QueryParameter;
 
 public class ProfileController {
 
@@ -26,6 +27,13 @@ public class ProfileController {
     public Response<Profile> getStudentProfile(@PathParameter(name = "id") String userId) {
         return Response.of(profileService.getProfile(userId));
     }
+
+    @Handler(method = HttpMethod.GET, resource = "/v1/alias/availability")
+    public void checkAlias(@QueryParameter(name = "user_id") String userId,
+                           @QueryParameter(name = "alias") String alias) {
+        profileService.checkAlias(userId, alias);
+    }
+
 
     @Handler(method = HttpMethod.POST, resource = "/v1/profile")
     public void createProfile(@BodyParameter CreateProfilePayload payload) {

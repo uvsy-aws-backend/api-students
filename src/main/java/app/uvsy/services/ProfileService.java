@@ -25,20 +25,13 @@ public class ProfileService {
 
         Optional<Profile> profileGet = profileDao.get(userId);
         if (!profileGet.isPresent()) {
-            Profile profileWithAlias = new Profile();
-            profileWithAlias.setAlias(alias);
-            List<Profile> aliasQuery = profileDao.query(profileWithAlias, "AliasIndex");
-
-            if (aliasQuery.isEmpty()) {
-                Profile profile = new Profile();
-                profile.setUserId(userId);
-                profile.setName(name);
-                profile.setLastName(lastName);
-                profile.setAlias(alias);
-                profileDao.save(profile);
-            } else {
-                throw new RecordAlreadyExistsException(alias);
-            }
+            this.checkAlias(userId, alias);
+            Profile profile = new Profile();
+            profile.setUserId(userId);
+            profile.setName(name);
+            profile.setLastName(lastName);
+            profile.setAlias(alias);
+            profileDao.save(profile);
         } else {
             throw new RecordAlreadyExistsException(userId);
         }
@@ -52,21 +45,10 @@ public class ProfileService {
 
         DynamoDBDAO<Profile> profileDao = DynamoDBDAO.createFor(Profile.class);
 
-        Profile profileInDB = profileDao.get(userId).orElseThrow(()-> new RecordNotFoundException(userId));
+        Profile profileInDB = profileDao.get(userId).orElseThrow(() -> new RecordNotFoundException(userId));
 
-        if (!alias.equals(profileInDB.getAlias())){
-            Profile profileWithAlias = new Profile();
-            profileWithAlias.setAlias(alias);
-            List<Profile> aliasQuery = profileDao.query(
-                    profileWithAlias,
-                    "AliasIndex",
-                    Collections.singletonMap("user_id", userId),
-                    false
-            );
-
-            if (!aliasQuery.isEmpty()) {
-                throw new RecordAlreadyExistsException(alias);
-            }
+        if (!alias.equals(profileInDB.getAlias())) {
+            this.checkAlias(userId, alias);
         }
 
         Profile profile = new Profile();
@@ -85,4 +67,22 @@ public class ProfileService {
         profileToDelete.setUserId(userId);
         profileDao.delete(profileToDelete);
     }
+
+    public void checkAlias(String userId, String alias) {
+        DynamoDBDAO<Profile> profileDao = DynamoDBDAO.createFor(Profile.class);
+
+        Profile profileWithAlias = new Profile();
+        profileWithAlias.setAlias(alias);
+        List<Profile> aliasQuery = profileDao.query(
+                profileWithAlias,
+                "AliasIndex",
+                Collections.singletonMap("user_id", userId),
+                false
+        );
+
+        if (!aliasQuery.isEmpty()) {
+            throw new RecordAlreadyExistsException(alias);
+        }
+    }
+
 }

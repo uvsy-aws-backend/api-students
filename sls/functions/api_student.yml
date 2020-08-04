@@ -31,4 +31,13 @@ api-students:
           parameters:
             paths:
               id: true
+    - http:
+        path: /v1/alias/availability
+        method: GET
+        cors: true
+        request:
+          parameters:
+            querystrings:
+              user_id: true
+              alias: true
 
