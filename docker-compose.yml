@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  dynamodb:
+    image: "amazon/dynamodb-local"
+    hostname: student-local-dynamodb
+    container_name: student-local-dynamodb
+    ports:
+      - "8000:8000"
+
+networks:
+
+  db:
+    driver: bridge

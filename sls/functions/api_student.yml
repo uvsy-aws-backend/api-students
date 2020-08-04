@@ -1,0 +1,34 @@
+api-students:
+  name: ${self:provider.stage}-${self:service}
+  handler: app.uvsy.StudentsAPI
+  events:
+    # Profile
+    - http:
+        path: /v1/profile/{id}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/profile
+        method: POST
+        cors: true
+    - http:
+        path: /v1/profile/{id}
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/profile/{id}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+
