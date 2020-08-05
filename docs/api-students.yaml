@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  description: API for students related operations.
+  version: 0.0.1
+  title: api-students
+tags:
+  - name: profile
+    description: Manage user's profile information
+  - name: alias
+    description: Manage alias information
+  - name: career
+    description: Manage student career information
+servers:
+  - url: https://students-api-{stage}.compute.universy.app/v1
+    variables:
+      stage:
+        default: dev2
+        enum:
+          - dev2
+paths:
+  /profile/{id}:
+    get:
+      tags:
+        - profile
+      summary: Get the profile information about an specific student
+      operationId: getStudentProfile
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student to query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Profile"
+        "400":
+          description: Profile not found for given id
+        "500":
+          description: Service error
+    put:
+      tags:
+        - profile
+      summary: Update a student profile
+      operationId: updateProfile
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfilePayload"
+        description: Information to update a student's profile.
+        required: true
+      responses:
+        "204":
+          description: Profile Updated
+        "500":
+          description: Service Error
+    delete:
+      tags:
+        - profile
+      summary: Deletes a student's profile.
+      operationId: deleteProfile
+      parameters:
+        - in: path
+          name: id
+          description: The id of the profile to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Profile deleted
+        "500":
+          description: Service error
+  /profile:
+    post:
+      tags:
+        - profile
+      summary: Creates a student's profile
+      operationId: createProfile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Profile"
+        description: Basic information to create a student's profile
+        required: true
+      responses:
+        "204":
+          description: Profile created
+        "500":
+          description: Service error
+  /alias/availability:
+    get:
+      tags:
+        - alias
+      summary: Check the availability for an alias
+      operationId: getInstitutions
+      parameters:
+        - in: query
+          name: user_id
+          description: The user id who is checking.
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: alias
+          description: The alias to check if its already in use.
+          required: true
+          schema:
+            type: string
+      responses:
+        "409":
+          description: The alias is in use for another student id.
+        "200":
+          description: The alias is available to use.
+        "500":
+          description: Service error
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Gonzalo
+        lastName:
+          type: string
+          example: Saad
+        alias:
+          type: string
+          example: Gonzalito
+    UpdateProfilePayload:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Gonzalo
+        lastName:
+          type: string
+          example: Saad
+        alias:
+          type: string
+          example: Gonzalito
