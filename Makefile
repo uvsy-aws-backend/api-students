@@ -14,9 +14,7 @@ deploy \
 STAGE ?= dev
 AWS_PROFILE ?= uvsy-dev
 
-# Migration
-COMMAND ?= upgrade
-REVISION ?= ""
+VENV ?= venv
 
 help:
 	@echo "    init"
@@ -36,7 +34,7 @@ help:
 	@echo "    deploy"
 	@echo "        Build and deploy to AWS."
 
-init: clean init-npm init-gradle
+init: clean init-npm init-gradle init-venv
 	@echo "Project initialized"
 
 init-npm:
@@ -44,6 +42,23 @@ init-npm:
 
 init-gradle:
 	@./gradlew compileJava
+
+init-venv: clean-venv create-venv update-venv
+	@echo ""
+	@echo "Do not forget to activate your new virtual environment"
+
+create-venv:
+	@echo "Creating virtual environment: $(VENV)..."
+	@python3 -m venv $(VENV)
+
+update-venv:
+	@echo "Updating virtual environment: $(VENV)..."
+	@( \
+		. $(VENV)/bin/activate; \
+		pip install --upgrade pip; \
+		pip install pre-commit; \
+		pre-commit install; \
+	)
 
 clean: clean-npm clean-sls clean-out clean-build
 
@@ -54,6 +69,10 @@ clean-npm:
 clean-sls:
 	@echo "Removing serverless files..."
 	@rm -rf .serverless
+
+clean-venv:
+	@echo "Removing virtual environment: $(VENV)..."
+	@rm -rf $(VENV)
 
 clean-build:
 	@echo "Removing build artifacts..."

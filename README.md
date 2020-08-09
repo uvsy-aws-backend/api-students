@@ -5,7 +5,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/65e0621c679440eff2d5/test_coverage)](https://codeclimate.com/github/uvsy-aws-backend/api-students/test_coverage)
 
 
-API that manages all students related information. 
+API that manages all students related information.
 
 
 ### Environment Requirements
@@ -24,7 +24,7 @@ API that manages all students related information.
 
     make build
 
-&nbsp;    
+&nbsp;
 ### Deploy
 
-    make deploy 
+    make deploy
