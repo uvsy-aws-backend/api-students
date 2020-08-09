@@ -9,7 +9,6 @@ import org.github.serverless.api.annotations.HttpMethod;
 import org.github.serverless.api.annotations.handler.Handler;
 import org.github.serverless.api.annotations.parameters.BodyParameter;
 import org.github.serverless.api.annotations.parameters.PathParameter;
-import org.github.serverless.api.annotations.parameters.QueryParameter;
 
 public class SessionController {
 
