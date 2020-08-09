@@ -1,0 +1,16 @@
+Resources:
+  CareerTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: ${self:provider.stage}-student-career
+      AttributeDefinitions:
+        - AttributeName: "user_id"
+          AttributeType: "S"
+        - AttributeName: "program_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "user_id"
+          KeyType: "HASH"
+        - AttributeName: "program_id"
+          KeyType: "RANGE"
+      BillingMode: PAY_PER_REQUEST

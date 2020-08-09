@@ -19,6 +19,7 @@ public class ProfileService {
 
         // TODO: For further validations and API resilience this service could:
         // - Check for format and types of its parameters
+        // (actually this should be done in the controller with Jackson)
         // - Check if the userId exists in Cognito
 
         DynamoDBDAO<Profile> profileDao = DynamoDBDAO.createFor(Profile.class);

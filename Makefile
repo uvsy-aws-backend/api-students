@@ -14,9 +14,7 @@ deploy \
 STAGE ?= dev
 AWS_PROFILE ?= uvsy-dev
 
-# Migration
-COMMAND ?= upgrade
-REVISION ?= ""
+VENV ?= venv
 
 help:
 	@echo "    init"
@@ -36,7 +34,7 @@ help:
 	@echo "    deploy"
 	@echo "        Build and deploy to AWS."
 
-init: clean init-npm init-gradle
+init: clean init-npm init-gradle init-venv
 	@echo "Project initialized"
 
 init-npm:
@@ -44,6 +42,23 @@ init-npm:
 
 init-gradle:
 	@./gradlew compileJava
+
+init-venv: clean-venv create-venv update-venv
+	@echo ""
+	@echo "Do not forget to activate your new virtual environment"
+
+create-venv:
+	@echo "Creating virtual environment: $(VENV)..."
+	@python3 -m venv $(VENV)
+
+update-venv:
+	@echo "Updating virtual environment: $(VENV)..."
+	@( \
+		. $(VENV)/bin/activate; \
+		pip install --upgrade pip; \
+		pip install pre-commit; \
+		pre-commit install; \
+	)
 
 clean: clean-npm clean-sls clean-out clean-build
 
@@ -55,6 +70,10 @@ clean-sls:
 	@echo "Removing serverless files..."
 	@rm -rf .serverless
 
+clean-venv:
+	@echo "Removing virtual environment: $(VENV)..."
+	@rm -rf $(VENV)
+
 clean-build:
 	@echo "Removing build artifacts..."
 	@./gradlew clean
@@ -62,11 +81,16 @@ clean-build:
 clean-out:
 	@echo "Removing compiled artifacts..."
 	@rm -rf out
+
 test:
 	@./gradlew test
 
 build: clean-build
 	@./gradlew build
+
+domain:
+	@echo "Creating domain for service"
+	@npx serverless create_domain --stage $(STAGE)
 
 deploy: build
 	@echo "Deploying to '$(STAGE)' with profile '$(AWS_PROFILE)'..."
@@ -74,7 +98,6 @@ deploy: build
 
 run: migrate clean-build build
 	@serverless offline start -v --stage local --noAuth
-
 
 migrate:
 	@./gradlew flywayMigrate

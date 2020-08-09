@@ -24,7 +24,7 @@ public class ProfileController {
     }
 
     @Handler(method = HttpMethod.GET, resource = "/v1/profile/{id}")
-    public Response<Profile> getStudentProfile(@PathParameter(name = "id") String userId) {
+    public Response<Profile> getProfile(@PathParameter(name = "id") String userId) {
         return Response.of(profileService.getProfile(userId));
     }
 

@@ -1,0 +1,16 @@
+Resources:
+  SessionTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: ${self:provider.stage}-student-sessions
+      AttributeDefinitions:
+        - AttributeName: "user_id"
+          AttributeType: "S"
+        - AttributeName: "device_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "user_id"
+          KeyType: "HASH"
+        - AttributeName: "device_id"
+          KeyType: "RANGE"
+      BillingMode: PAY_PER_REQUEST
