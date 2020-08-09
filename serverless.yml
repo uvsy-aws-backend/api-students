@@ -18,12 +18,24 @@ provider:
 
 plugins:
   - serverless-offline
+  - serverless-domain-manager
+
 
 package:
   artifact: build/distributions/${self:service}-1.0.zip
 
 
 custom:
+
+  # Domain name configuration
+  customDomain:
+    domainName: students-api-${self:provider.stage}.compute.universy.app
+    stage: ${self:provider.stage}
+    endpointType: "regional"
+    hostedZoneId: ${ssm:/all/route53/zones/compute/id~true}
+    certificateArn: ${ssm:/all/acm/cert/compute/arn~true}
+    createRoute53Record: true
+    apiType: REST
 
   # Prune
   prune:
@@ -35,4 +47,6 @@ functions:
 
 resources:
  - ${file(./sls/resources/profile_dynamo_db_table.yml)}
+ - ${file(./sls/resources/session_dynamo_db_table.yml)}
+ - ${file(./sls/resources/career_dynamo_db_table.yml)}
 

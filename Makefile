@@ -62,11 +62,16 @@ clean-build:
 clean-out:
 	@echo "Removing compiled artifacts..."
 	@rm -rf out
+
 test:
 	@./gradlew test
 
 build: clean-build
 	@./gradlew build
+
+domain:
+	@echo "Creating domain for service"
+	@npx serverless create_domain --stage $(STAGE)
 
 deploy: build
 	@echo "Deploying to '$(STAGE)' with profile '$(AWS_PROFILE)'..."
@@ -74,7 +79,6 @@ deploy: build
 
 run: migrate clean-build build
 	@serverless offline start -v --stage local --noAuth
-
 
 migrate:
 	@./gradlew flywayMigrate

@@ -31,6 +31,7 @@ api-students:
           parameters:
             paths:
               id: true
+    # Alias
     - http:
         path: /v1/alias/availability
         method: GET
@@ -40,4 +41,82 @@ api-students:
             querystrings:
               user_id: true
               alias: true
-
+    # Session
+    - http:
+        path: /v1/student/{id}/sessions/{deviceId}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              deviceId: true
+    - http:
+        path: /v1/student/{id}/sessions/{deviceId}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              deviceId: true
+    - http:
+        path: /v1/student/{id}/sessions
+        method: POST
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/student/{id}/sessions
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    # Career
+    - http:
+        path: /v1/student/{id}/careers
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/student/{id}/careers
+        method: POST
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/student/{id}/careers/{programId}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              programId: true
+    - http:
+        path: /v1/student/{id}/careers/{programId}
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              programId: true
+    - http:
+        path: /v1/student/{id}/careers/{programId}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              programId: true
