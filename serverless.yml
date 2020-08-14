@@ -49,3 +49,4 @@ resources:
  - ${file(./sls/resources/profile_dynamo_db_table.yml)}
  - ${file(./sls/resources/career_dynamo_db_table.yml)}
  - ${file(./sls/resources/note_dynamo_db_table.yml)}
+ - ${file(./sls/resources/event_dynamo_db_table.yml)}

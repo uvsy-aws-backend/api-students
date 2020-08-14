@@ -129,3 +129,47 @@ api-students:
             paths:
               id: true
               noteId: true
+    # Notes
+    - http:
+        path: /v1/students/{id}/events
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/students/{id}/events
+        method: POST
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/students/{id}/events/{eventId}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              eventId: true
+    - http:
+        path: /v1/students/{id}/events/{eventId}
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              eventId: true
+    - http:
+        path: /v1/students/{id}/events/{eventId}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              eventId: true

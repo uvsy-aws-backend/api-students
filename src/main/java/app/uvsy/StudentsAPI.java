@@ -1,6 +1,7 @@
 package app.uvsy;
 
 import app.uvsy.controllers.career.CareerController;
+import app.uvsy.controllers.events.EventsController;
 import app.uvsy.controllers.notes.NotesController;
 import app.uvsy.controllers.profile.ProfileController;
 import org.github.serverless.api.ServerlessApiHandler;
@@ -14,5 +15,6 @@ public class StudentsAPI extends ServerlessApiHandler {
         controllers.add(new ProfileController());
         controllers.add(new CareerController());
         controllers.add(new NotesController());
+        controllers.add(new EventsController());
     }
 }

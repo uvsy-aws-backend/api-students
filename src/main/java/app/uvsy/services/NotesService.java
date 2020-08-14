@@ -28,6 +28,12 @@ public class NotesService {
         notesDao.save(note);
     }
 
+    public Note getNote(String userId, String noteId) {
+        DynamoDBDAO<Note> notesDao = DynamoDBDAO.createFor(Note.class);
+        return notesDao.get(userId, noteId)
+                .orElseThrow(() -> new RecordNotFoundException(userId));
+    }
+
     public void updateNote(String userId, String noteId, String title, String description) {
         DynamoDBDAO<Note> notesDao = DynamoDBDAO.createFor(Note.class);
 
@@ -47,11 +53,5 @@ public class NotesService {
         notesToDelete.setUserId(userId);
         notesToDelete.setNoteId(nodeId);
         notesDao.delete(notesToDelete);
-    }
-
-    public Note getNote(String userId, String noteId) {
-        DynamoDBDAO<Note> notesDao = DynamoDBDAO.createFor(Note.class);
-        return notesDao.get(userId, noteId)
-                .orElseThrow(() -> new RecordNotFoundException(userId));
     }
 }
