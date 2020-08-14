@@ -53,17 +53,18 @@ public class Event {
     private Date createdAt;
 
     public boolean belongsToRange(Date dateFrom, Date dateTo) {
+        boolean isInRange = Boolean.FALSE;
         if (date != null) {
             if (dateFrom != null && dateTo != null) {
-                return isAfterDate(dateFrom) && isBeforeDate(dateTo);
+                isInRange = isAfterDate(dateFrom) && isBeforeDate(dateTo);
             } else if (dateFrom != null) {
-                return isAfterDate(dateFrom);
+                isInRange = isAfterDate(dateFrom);
             } else if (dateTo != null) {
-                return isBeforeDate(dateTo);
+                isInRange =  isBeforeDate(dateTo);
             }
-            return Boolean.TRUE;
+            isInRange =  Boolean.TRUE;
         }
-        return Boolean.FALSE;
+        return isInRange;
     }
 
     private boolean isAfterDate(Date dateFrom) {
