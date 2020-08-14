@@ -25,12 +25,12 @@ public class CareerController {
     }
 
 
-    @Handler(method = HttpMethod.GET, resource = "/v1/student/{id}/careers")
+    @Handler(method = HttpMethod.GET, resource = "/v1/students/{id}/careers")
     public Response<List<Career>> getCareers(@PathParameter(name = "id") String userId) {
         return Response.of(careerService.getCareers(userId));
     }
 
-    @Handler(method = HttpMethod.POST, resource = "/v1/student/{id}/careers")
+    @Handler(method = HttpMethod.POST, resource = "/v1/students/{id}/careers")
     public void createCareer(@PathParameter(name = "id") String userId,
                              @BodyParameter CreateCareerPayload payload) {
         careerService.createCareer(
@@ -41,14 +41,14 @@ public class CareerController {
         );
     }
 
-    @Handler(method = HttpMethod.GET, resource = "/v1/student/{id}/careers/{programId}")
+    @Handler(method = HttpMethod.GET, resource = "/v1/students/{id}/careers/{programId}")
     public Response<Career> getCareer(@PathParameter(name = "id") String userId,
                                       @PathParameter(name = "programId") String programId) {
         return Response.of(careerService.getCareer(userId, programId));
     }
 
 
-    @Handler(method = HttpMethod.PUT, resource = "/v1/student/{id}/careers/{programId}")
+    @Handler(method = HttpMethod.PUT, resource = "/v1/students/{id}/careers/{programId}")
     public void updateCareer(@PathParameter(name = "id") String userId,
                              @PathParameter(name = "programId") String programId,
                              @BodyParameter UpdateCareerPayload payload) {
@@ -60,7 +60,7 @@ public class CareerController {
         );
     }
 
-    @Handler(method = HttpMethod.DELETE, resource = "/v1/student/{id}/careers/{programId}")
+    @Handler(method = HttpMethod.DELETE, resource = "/v1/students/{id}/careers/{programId}")
     public void deleteCareer(@PathParameter(name = "id") String userId,
                              @PathParameter(name = "programId") String programId) {
         careerService.deleteCareer(userId, programId);

@@ -4,9 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/65e0621c679440eff2d5/maintainability)](https://codeclimate.com/github/uvsy-aws-backend/api-students/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/65e0621c679440eff2d5/test_coverage)](https://codeclimate.com/github/uvsy-aws-backend/api-students/test_coverage)
 
-
 API that manages all students related information.
-
 
 ### Environment Requirements
 

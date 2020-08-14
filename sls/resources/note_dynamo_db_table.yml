@@ -1,16 +1,16 @@
 Resources:
-  SessionTable:
+  NoteTable:
     Type: "AWS::DynamoDB::Table"
     Properties:
-      TableName: ${self:provider.stage}-student-sessions
+      TableName: ${self:provider.stage}-student-notes
       AttributeDefinitions:
         - AttributeName: "user_id"
           AttributeType: "S"
-        - AttributeName: "device_id"
+        - AttributeName: "note_id"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "user_id"
           KeyType: "HASH"
-        - AttributeName: "device_id"
+        - AttributeName: "note_id"
           KeyType: "RANGE"
       BillingMode: PAY_PER_REQUEST
