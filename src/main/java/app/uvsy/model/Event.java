@@ -55,23 +55,26 @@ public class Event {
     public boolean belongsToRange(Date dateFrom, Date dateTo) {
         if (date != null) {
             if (dateFrom != null && dateTo != null) {
-                Instant instantFrom = dateFrom.toInstant().truncatedTo(ChronoUnit.DAYS);
-                Instant instantTo = dateTo.toInstant().truncatedTo(ChronoUnit.DAYS);
-                Instant instantOfEvent = date.toInstant().truncatedTo(ChronoUnit.DAYS);
-                return (instantFrom.equals(instantOfEvent) || instantFrom.isBefore(instantOfEvent)) &&
-                        (instantTo.equals(instantOfEvent) || instantTo.isAfter(instantOfEvent));
+                return isAfterDate(dateFrom) && isBeforeDate(dateTo);
             } else if (dateFrom != null) {
-                Instant instantFrom = dateFrom.toInstant().truncatedTo(ChronoUnit.DAYS);
-                Instant instantOfEvent = date.toInstant().truncatedTo(ChronoUnit.DAYS);
-                return (instantFrom.equals(instantOfEvent) || instantFrom.isBefore(instantOfEvent));
+                return isAfterDate(dateFrom);
             } else if (dateTo != null) {
-                Instant instantTo = dateTo.toInstant().truncatedTo(ChronoUnit.DAYS);
-                Instant instantOfEvent = date.toInstant().truncatedTo(ChronoUnit.DAYS);
-                return (instantTo.equals(instantOfEvent) || instantTo.isAfter(instantOfEvent));
+                return isBeforeDate(dateTo);
             }
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
+    private boolean isAfterDate(Date dateFrom) {
+        Instant instantFrom = dateFrom.toInstant().truncatedTo(ChronoUnit.DAYS);
+        Instant instantOfEvent = date.toInstant().truncatedTo(ChronoUnit.DAYS);
+        return (instantFrom.equals(instantOfEvent) || instantFrom.isBefore(instantOfEvent));
+    }
+
+    private boolean isBeforeDate(Date dateTo) {
+        Instant instantTo = dateTo.toInstant().truncatedTo(ChronoUnit.DAYS);
+        Instant instantOfEvent = date.toInstant().truncatedTo(ChronoUnit.DAYS);
+        return (instantTo.equals(instantOfEvent) || instantTo.isAfter(instantOfEvent));
+    }
 }
