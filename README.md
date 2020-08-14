@@ -8,9 +8,9 @@ API that manages all students related information.
 
 ### Environment Requirements
 
-  - JDK 8
-  - NodeJS and npm
-  - Docker (optional)
+- JDK 8
+- NodeJS and npm
+- Docker (optional)
 
 &nbsp;
 ### SetUp
