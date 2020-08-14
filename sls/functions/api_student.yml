@@ -41,44 +41,9 @@ api-students:
             querystrings:
               user_id: true
               alias: true
-    # Session
-    - http:
-        path: /v1/student/{id}/sessions/{deviceId}
-        method: GET
-        cors: true
-        request:
-          parameters:
-            paths:
-              id: true
-              deviceId: true
-    - http:
-        path: /v1/student/{id}/sessions/{deviceId}
-        method: DELETE
-        cors: true
-        request:
-          parameters:
-            paths:
-              id: true
-              deviceId: true
-    - http:
-        path: /v1/student/{id}/sessions
-        method: POST
-        cors: true
-        request:
-          parameters:
-            paths:
-              id: true
-    - http:
-        path: /v1/student/{id}/sessions
-        method: PUT
-        cors: true
-        request:
-          parameters:
-            paths:
-              id: true
     # Career
     - http:
-        path: /v1/student/{id}/careers
+        path: /v1/students/{id}/careers
         method: GET
         cors: true
         request:
@@ -86,7 +51,7 @@ api-students:
             paths:
               id: true
     - http:
-        path: /v1/student/{id}/careers
+        path: /v1/students/{id}/careers
         method: POST
         cors: true
         request:
@@ -94,7 +59,7 @@ api-students:
             paths:
               id: true
     - http:
-        path: /v1/student/{id}/careers/{programId}
+        path: /v1/students/{id}/careers/{programId}
         method: GET
         cors: true
         request:
@@ -103,7 +68,7 @@ api-students:
               id: true
               programId: true
     - http:
-        path: /v1/student/{id}/careers/{programId}
+        path: /v1/students/{id}/careers/{programId}
         method: PUT
         cors: true
         request:
@@ -112,7 +77,7 @@ api-students:
               id: true
               programId: true
     - http:
-        path: /v1/student/{id}/careers/{programId}
+        path: /v1/students/{id}/careers/{programId}
         method: DELETE
         cors: true
         request:
@@ -120,3 +85,47 @@ api-students:
             paths:
               id: true
               programId: true
+    # Notes
+    - http:
+        path: /v1/students/{id}/notes
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/students/{id}/notes
+        method: POST
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/students/{id}/notes/{noteId}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              noteId: true
+    - http:
+        path: /v1/students/{id}/notes/{noteId}
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              noteId: true
+    - http:
+        path: /v1/students/{id}/notes/{noteId}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              noteId: true
