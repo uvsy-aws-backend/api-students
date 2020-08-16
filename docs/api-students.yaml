@@ -9,7 +9,11 @@ tags:
   - name: alias
     description: Manage alias information
   - name: career
-    description: Manage student career information
+    description: Manage student's career information
+  - name: notes
+    description: Manage student's notes
+  - name: events
+    description: Manage student's events
 servers:
   - url: https://students-api-{stage}.compute.universy.app/v1
     variables:
@@ -130,6 +134,359 @@ paths:
           description: The alias is available to use.
         "500":
           description: Service error
+  /students/{id}/careers:
+    get:
+      tags:
+        - career
+      summary: Get the student's careers
+      operationId: getCareers
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Career"
+        "500":
+          description: Service error
+    post:
+      tags:
+        - career
+      summary: Creates a student's career
+      operationId: createCareer
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCareerPayload"
+        description: Basic information to create a student's career
+        required: true
+      responses:
+        "204":
+          description: Career created
+        "500":
+          description: Service error
+  /students/{id}/careers/{programId}:
+    get:
+      tags:
+        - career
+      summary: Get one specific student's career
+      operationId: getCareer
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: programId
+          description: The id of the program's career
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Career"
+        "400":
+          description: Career not found
+        "500":
+          description: Service error
+    put:
+      tags:
+        - career
+      summary: Update one student's career
+      operationId: updateCareer
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student to update
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: programId
+          description: The id of the program's career
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCareerPayload"
+        description: Information to update a student's career.
+        required: true
+      responses:
+        "204":
+          description: Career Updated
+        "500":
+          description: Service Error
+    delete:
+      tags:
+        - career
+      summary: Deletes one student's career.
+      operationId: deleteCareer
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to delete the career.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: programId
+          description: The id of the career to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Career deleted
+        "500":
+          description: Service error
+  /students/{id}/notes:
+    get:
+      tags:
+        - notes
+      summary: Get the student's notes
+      operationId: getNotes
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Note"
+        "500":
+          description: Service error
+    post:
+      tags:
+        - notes
+      summary: Creates a student's note
+      operationId: createNote
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNotePayload"
+        description: Basic information to create a student's note
+        required: true
+      responses:
+        "204":
+          description: Note created
+        "500":
+          description: Service error
+  /students/{id}/notes/{noteId}:
+    put:
+      tags:
+        - notes
+      summary: Update one student's note
+      operationId: updateNote
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to update the note.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: noteId
+          description: The id of the students's note to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateNotePayload"
+        description: Information to update a student's note.
+        required: true
+      responses:
+        "204":
+          description: Note Updated
+        "500":
+          description: Service Error
+    delete:
+      tags:
+        - notes
+      summary: Deletes one student's note.
+      operationId: deleteNote
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to delete the note.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: noteId
+          description: The id of the note to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Note deleted
+        "500":
+          description: Service error
+  /students/{id}/events:
+    get:
+      tags:
+        - events
+      summary: Get the student's events
+      operationId: getEvents
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: dateFrom
+          description: The start date to get the events
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: dateTo
+          description: The end date to get the events
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Event"
+        "500":
+          description: Service error
+    post:
+      tags:
+        - events
+      summary: Creates a student's event
+      operationId: createEvent
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEventPayload"
+        description: Basic information to create a student's event
+        required: true
+      responses:
+        "204":
+          description: Event created
+        "500":
+          description: Service error
+  /students/{id}/notes/{eventId}:
+    put:
+      tags:
+        - events
+      summary: Update one student's event
+      operationId: updateEvent
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to update the event.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: eventId
+          description: The id of the students's event to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEventPayload"
+        description: Information to update a student's event.
+        required: true
+      responses:
+        "204":
+          description: Event Updated
+        "500":
+          description: Service Error
+    delete:
+      tags:
+        - events
+      summary: Deletes one student's event.
+      operationId: deleteEvent
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to delete the event.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: eventId
+          description: The id of the event to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Event deleted
+        "500":
+          description: Service error
 components:
   schemas:
     Profile:
@@ -159,3 +516,153 @@ components:
         alias:
           type: string
           example: Gonzalito
+    Career:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        programId:
+          type: string
+          format: uuid
+        beginYear:
+          type: integer
+          example: 2020
+        endYear:
+          type: integer
+          example: 2022
+        updatedAt:
+          type: integer
+        createdAt:
+          type: integer
+    CreateCareerPayload:
+      type: object
+      properties:
+        programId:
+          type: string
+          format: uuid
+        beginYear:
+          type: integer
+          example: 2020
+        endYear:
+          type: integer
+          example: 2022
+    UpdateCareerPayload:
+      type: object
+      properties:
+        beginYear:
+          type: integer
+          example: 2020
+        endYear:
+          type: integer
+          example: 2022
+    Note:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        noteId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Materiales de Fisica
+        description:
+          type: string
+          example: Lleva termometro
+        updatedAt:
+          type: integer
+        createdAt:
+          type: integer
+    CreateNotePayload:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Materiales de Fisica
+        description:
+          type: string
+          example: Lleva termometro
+    UpdateNotePayload:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Materiales de Fisica
+        description:
+          type: string
+          example: Lleva termometro
+    Event:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        eventId:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Rendir Fisica
+        description:
+          type: string
+          example: No olvidar llevar termometro
+        eventType:
+          type: object
+          example: REGULAR_EXAM
+        date:
+          type: string
+          example: 03-OCT-2020
+        timeTo:
+          type: integer
+          example: 1400
+        timeFrom:
+          type: integer
+          example: 1500
+        updated_at:
+          type: integer
+        created_at:
+          type: integer
+    CreateEventPayload:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Rendir Fisica
+        description:
+          type: string
+          example: No olvidar llevar calculadora
+        eventType:
+          type: object
+          example: REGULAR_EXAM
+        date:
+          type: string
+          example: 03-OCT-2020
+        timeTo:
+          type: integer
+          example: 1400
+        timeFrom:
+          type: integer
+          example: 1500
+    UpdateEventPayload:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Rendir Fisica
+        description:
+          type: string
+          example: No olvidar llevar calculadora
+        eventType:
+          type: object
+          example: REGULAR_EXAM
+        date:
+          type: string
+          example: 03-OCT-2020
+        timeTo:
+          type: integer
+          example: 1400
+        timeFrom:
+          type: integer
+          example: 1500
