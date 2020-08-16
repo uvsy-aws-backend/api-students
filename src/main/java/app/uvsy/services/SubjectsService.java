@@ -79,12 +79,12 @@ public class SubjectsService {
         subjectsDao.save(subject);
     }
 
-    public void deleteSubject(String userId, String nodeId) {
+    public void deleteSubject(String userId, String programId) {
         DynamoDBDAO<Subject> subjectsDao = DynamoDBDAO.createFor(Subject.class);
 
         Subject subjectsToDelete = new Subject();
         subjectsToDelete.setUserId(userId);
-        subjectsToDelete.setSubjectId(nodeId);
+        subjectsToDelete.setSubjectId(programId);
         subjectsDao.delete(subjectsToDelete);
     }
 }

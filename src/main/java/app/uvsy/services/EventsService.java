@@ -61,12 +61,12 @@ public class EventsService {
         eventsDao.save(event);
     }
 
-    public void deleteEvent(String userId, String nodeId) {
+    public void deleteEvent(String userId, String eventId) {
         DynamoDBDAO<Event> eventsDao = DynamoDBDAO.createFor(Event.class);
 
         Event eventsToDelete = new Event();
         eventsToDelete.setUserId(userId);
-        eventsToDelete.setEventId(nodeId);
+        eventsToDelete.setEventId(eventId);
         eventsDao.delete(eventsToDelete);
     }
 }
