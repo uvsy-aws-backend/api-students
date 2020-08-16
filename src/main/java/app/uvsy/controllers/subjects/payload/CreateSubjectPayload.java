@@ -1,9 +1,6 @@
 package app.uvsy.controllers.subjects.payload;
 
 import app.uvsy.model.Milestone;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
