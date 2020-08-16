@@ -34,7 +34,7 @@ public class MilestoneValidator implements Validator<Subject> {
                 .orElseThrow(() -> new InvalidSubjectException("Invalid Milestone"));
     }
 
-    private void throwRepeatedMilestoneException(long value) {
+    private void throwRepeatedMilestoneException(@SuppressWarnings("unused") long value) {
         throw new InvalidSubjectException("Repeated milestones found");
     }
 }
