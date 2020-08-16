@@ -60,6 +60,24 @@ public class DynamoDBDAO<T> {
         }
     }
 
+    public List<T> query(T object, Map<String, String> filters, boolean equal) {
+        try {
+            Map<String, Condition> queryFilters = createFilters(filters, equal);
+            DynamoDBQueryExpression<T> query = new DynamoDBQueryExpression<T>()
+                    .withHashKeyValues(object)
+                    .withQueryFilter(queryFilters);
+
+            return getMapper().query(entity, query);
+        } catch (Exception e) {
+            throw new DBException(e);
+        }
+    }
+
+    public List<T> query(T object, Map<String, String> filters) {
+        return this.query(object, filters, Boolean.TRUE);
+    }
+
+
     public List<T> query(T object, String index) {
         try {
             DynamoDBQueryExpression<T> query = new DynamoDBQueryExpression<T>()
@@ -78,16 +96,7 @@ public class DynamoDBDAO<T> {
      */
     public List<T> query(T object, String index, Map<String, String> filters, boolean equal) {
         try {
-            ComparisonOperator operator = equal ? ComparisonOperator.EQ : ComparisonOperator.NE;
-            Map<String, Condition> queryFilters = filters.entrySet().stream()
-                    .collect(Collectors.toMap(
-                            Map.Entry::getKey,
-                            e -> new Condition()
-                                    .withComparisonOperator(operator)
-                                    .withAttributeValueList(new AttributeValue().withS(e.getValue()))
-                            )
-                    );
-
+            Map<String, Condition> queryFilters = createFilters(filters, equal);
             DynamoDBQueryExpression<T> query = new DynamoDBQueryExpression<T>()
                     .withHashKeyValues(object)
                     .withConsistentRead(Boolean.FALSE)
@@ -101,6 +110,18 @@ public class DynamoDBDAO<T> {
 
     public List<T> query(T object, String index, Map<String, String> filters) {
         return this.query(object, index, filters, Boolean.TRUE);
+    }
+
+    private Map<String, Condition> createFilters(Map<String, String> filters, boolean equal) {
+        ComparisonOperator operator = equal ? ComparisonOperator.EQ : ComparisonOperator.NE;
+        return filters.entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> new Condition()
+                                .withComparisonOperator(operator)
+                                .withAttributeValueList(new AttributeValue().withS(e.getValue()))
+                        )
+                );
     }
 
 

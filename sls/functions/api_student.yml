@@ -85,6 +85,52 @@ api-students:
             paths:
               id: true
               programId: true
+    # Subject
+    - http:
+        path: /v1/students/{id}/subjects
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+            queryStrings:
+              programId: true
+    - http:
+        path: /v1/students/{id}/subjects
+        method: POST
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+    - http:
+        path: /v1/students/{id}/subjects/{subjectId}
+        method: GET
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              subjectId: true
+    - http:
+        path: /v1/students/{id}/subjects/{subjectId}
+        method: PUT
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              subjectId: true
+    - http:
+        path: /v1/students/{id}/subjects/{subjectId}
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+              subjectId: true
     # Notes
     - http:
         path: /v1/students/{id}/notes
@@ -129,7 +175,7 @@ api-students:
             paths:
               id: true
               noteId: true
-    # Notes
+    # Events
     - http:
         path: /v1/students/{id}/events
         method: GET
