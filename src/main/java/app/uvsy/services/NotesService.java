@@ -46,12 +46,12 @@ public class NotesService {
         notesDao.save(note);
     }
 
-    public void deleteNote(String userId, String nodeId) {
+    public void deleteNote(String userId, String noteId) {
         DynamoDBDAO<Note> notesDao = DynamoDBDAO.createFor(Note.class);
 
         Note notesToDelete = new Note();
         notesToDelete.setUserId(userId);
-        notesToDelete.setNoteId(nodeId);
+        notesToDelete.setNoteId(noteId);
         notesDao.delete(notesToDelete);
     }
 }
