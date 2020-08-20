@@ -219,3 +219,11 @@ api-students:
             paths:
               id: true
               eventId: true
+    - http:
+        path: /v1/students/{id}/events
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
