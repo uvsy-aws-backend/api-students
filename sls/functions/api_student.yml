@@ -175,6 +175,14 @@ api-students:
             paths:
               id: true
               noteId: true
+    - http:
+        path: /v1/students/{id}/notes
+        method: DELETE
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
     # Events
     - http:
         path: /v1/students/{id}/events
@@ -219,11 +227,3 @@ api-students:
             paths:
               id: true
               eventId: true
-    - http:
-        path: /v1/students/{id}/events
-        method: DELETE
-        cors: true
-        request:
-          parameters:
-            paths:
-              id: true
