@@ -70,7 +70,7 @@ public class NotesController {
 
     @Handler(method = HttpMethod.DELETE, resource = "/v1/students/{id}/notes")
     public void batchDelete(@PathParameter(name = "id") String userId,
-                            @QueryParameter(name = "noteId") List<String> noteIds) {
+                            @QueryParameter(name = "noteIds") List<String> noteIds) {
         notesService.deleteNotes(userId, noteIds);
     }
 }
