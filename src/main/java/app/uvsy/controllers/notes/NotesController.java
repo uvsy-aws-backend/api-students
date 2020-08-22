@@ -9,6 +9,7 @@ import org.github.serverless.api.annotations.HttpMethod;
 import org.github.serverless.api.annotations.handler.Handler;
 import org.github.serverless.api.annotations.parameters.BodyParameter;
 import org.github.serverless.api.annotations.parameters.PathParameter;
+import org.github.serverless.api.annotations.parameters.QueryParameter;
 
 import java.util.List;
 
@@ -65,5 +66,11 @@ public class NotesController {
     public void deleteNote(@PathParameter(name = "id") String userId,
                            @PathParameter(name = "noteId") String noteId) {
         notesService.deleteNote(userId, noteId);
+    }
+
+    @Handler(method = HttpMethod.DELETE, resource = "/v1/students/{id}/notes")
+    public void batchDelete(@PathParameter(name = "id") String userId,
+                            @QueryParameter(name = "noteIds") List<String> noteIds) {
+        notesService.deleteNotes(userId, noteIds);
     }
 }

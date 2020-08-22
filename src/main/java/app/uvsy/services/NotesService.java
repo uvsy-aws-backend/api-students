@@ -54,4 +54,18 @@ public class NotesService {
         notesToDelete.setNoteId(noteId);
         notesDao.delete(notesToDelete);
     }
+
+    public void deleteNotes(String userId, List<String> noteIds) {
+        DynamoDBDAO<Note> notesDao = DynamoDBDAO.createFor(Note.class);
+        noteIds.stream()
+                .map(uuid -> createNote(userId, uuid))
+                .forEach(notesDao::delete);
+    }
+
+    private Note createNote(String userId, String nodeId){
+        Note note = new Note();
+        note.setUserId(userId);
+        note.setNoteId(nodeId);
+        return note;
+    }
 }
