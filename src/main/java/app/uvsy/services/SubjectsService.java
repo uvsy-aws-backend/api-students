@@ -67,7 +67,7 @@ public class SubjectsService {
                               Integer score, List<Milestone> milestones) {
         DynamoDBDAO<Subject> subjectsDao = DynamoDBDAO.createFor(Subject.class);
 
-        Subject subject = subjectsDao.get(userId, subjectId).orElseThrow(() -> new RecordNotFoundException(userId));
+        Subject subject = new Subject();
         subject.setUserId(userId);
         subject.setSubjectId(subjectId);
         subject.setProgramId(programId);

@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class Subject {
     private List<Milestone> milestones;
 
     @DynamoDBIgnore
+    @JsonIgnore
     public boolean isApproved() {
         return milestones.stream()
                 .anyMatch(Milestone::isApproved);
