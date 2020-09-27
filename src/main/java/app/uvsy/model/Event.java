@@ -61,8 +61,9 @@ public class Event {
                 isInRange = isAfterDate(dateFrom);
             } else if (dateTo != null) {
                 isInRange =  isBeforeDate(dateTo);
+            } else {
+                isInRange =  Boolean.TRUE;
             }
-            isInRange =  Boolean.TRUE;
         }
         return isInRange;
     }
