@@ -1,5 +1,5 @@
-api-students:
-  name: ${self:provider.stage}-${self:service}
+api:
+  name: ${self:provider.stage}-${self:service}-api
   handler: app.uvsy.StudentsAPI
   events:
     # Profile

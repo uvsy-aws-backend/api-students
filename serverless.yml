@@ -1,4 +1,4 @@
-service: api-students
+service: students
 
 provider:
   name: aws
@@ -43,7 +43,7 @@ custom:
     number: 3
 
 functions:
-  - ${file(./sls/functions/api_student.yml)}
+  - ${file(./sls/functions/api.yml)}
 
 resources:
  - ${file(./sls/resources/profile_dynamo_db_table.yml)}
