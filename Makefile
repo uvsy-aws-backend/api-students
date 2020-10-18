@@ -95,9 +95,3 @@ domain:
 deploy: build
 	@echo "Deploying to '$(STAGE)' with profile '$(AWS_PROFILE)'..."
 	@serverless deploy -v --stage $(STAGE) --profile $(AWS_PROFILE)
-
-run: migrate clean-build build
-	@serverless offline start -v --stage local --noAuth
-
-migrate:
-	@./gradlew flywayMigrate
