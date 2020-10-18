@@ -41,6 +41,10 @@ api-students:
             querystrings:
               user_id: true
               alias: true
+    - http:
+        path: /v1/alias
+        method: POST
+        cors: true
     # Career
     - http:
         path: /v1/students/{id}/careers

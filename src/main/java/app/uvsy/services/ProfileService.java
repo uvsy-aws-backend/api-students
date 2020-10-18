@@ -2,12 +2,14 @@ package app.uvsy.services;
 
 import app.uvsy.database.DynamoDBDAO;
 import app.uvsy.model.Profile;
+import app.uvsy.model.UserAlias;
 import app.uvsy.services.exceptions.RecordAlreadyExistsException;
 import app.uvsy.services.exceptions.RecordNotFoundException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ProfileService {
     public Profile getProfile(String userId) {
@@ -86,4 +88,13 @@ public class ProfileService {
         }
     }
 
+    public List<UserAlias> getAlias(List<String> userId) {
+        DynamoDBDAO<Profile> profileDao = DynamoDBDAO.createFor(Profile.class);
+        return userId.stream()
+                .map(profileDao::get)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(p -> new UserAlias(p.getUserId(), p.getAlias()))
+                .collect(Collectors.toList());
+    }
 }

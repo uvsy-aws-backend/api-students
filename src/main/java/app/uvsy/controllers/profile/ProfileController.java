@@ -1,8 +1,10 @@
 package app.uvsy.controllers.profile;
 
 import app.uvsy.controllers.profile.payload.CreateProfilePayload;
+import app.uvsy.controllers.profile.payload.GetAliasPayload;
 import app.uvsy.controllers.profile.payload.UpdateProfilePayload;
 import app.uvsy.model.Profile;
+import app.uvsy.model.UserAlias;
 import app.uvsy.response.Response;
 import app.uvsy.services.ProfileService;
 import org.github.serverless.api.annotations.HttpMethod;
@@ -10,6 +12,10 @@ import org.github.serverless.api.annotations.handler.Handler;
 import org.github.serverless.api.annotations.parameters.BodyParameter;
 import org.github.serverless.api.annotations.parameters.PathParameter;
 import org.github.serverless.api.annotations.parameters.QueryParameter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ProfileController {
 
@@ -34,6 +40,14 @@ public class ProfileController {
         profileService.checkAlias(userId, alias);
     }
 
+    @Handler(method = HttpMethod.POST, resource = "/v1/alias")
+    public Response<List<UserAlias>> getAlias(@BodyParameter GetAliasPayload payload) {
+        return Response.of(profileService.getAlias(
+                Optional.ofNullable(payload)
+                        .map(GetAliasPayload::getUsersIds)
+                        .orElseGet(ArrayList::new)
+        ));
+    }
 
     @Handler(method = HttpMethod.POST, resource = "/v1/profile")
     public void createProfile(@BodyParameter CreateProfilePayload payload) {
