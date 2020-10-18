@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: API for students related operations.
   version: 0.0.1
-  title: api-students
+  title: StudentsAPI
 tags:
   - name: profile
     description: Manage user's profile information
