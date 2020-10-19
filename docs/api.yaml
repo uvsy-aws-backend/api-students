@@ -21,6 +21,7 @@ servers:
         default: dev2
         enum:
           - dev2
+          - sat1
 paths:
   /profile/{id}:
     get:
