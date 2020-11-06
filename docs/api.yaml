@@ -14,6 +14,8 @@ tags:
     description: Manage student's notes
   - name: events
     description: Manage student's events
+  - name: subjects
+    description: Manage student's subjects
 servers:
   - url: https://students-api-{stage}.compute.universy.app/v1
     variables:
@@ -488,6 +490,142 @@ paths:
           description: Event deleted
         "500":
           description: Service error
+
+  /students/{id}/subjects:
+    get:
+      tags:
+        - subjects
+      summary: Get the student's subjects
+      operationId: getSubjects
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Subject"
+        "500":
+          description: Service error
+    post:
+      tags:
+        - subjects
+      summary: Creates a student's subject
+      operationId: createSubject
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSubjectPayload"
+        description: Basic information to create a student's subject
+        required: true
+      responses:
+        "204":
+          description: Subject created
+        "500":
+          description: Service error
+
+  /students/{id}/subjects/{subjectId}:
+    get:
+      tags:
+        - subjects
+      summary: Get one specific student's subject
+      operationId: getSubject
+      parameters:
+        - in: path
+          name: id
+          description: The user id of the student
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: subjectId
+          description: The subject id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Subject"
+        "500":
+          description: Service error
+    put:
+      tags:
+        - subjects
+      summary: Update one student's subject
+      operationId: updateSubject
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to update the subject.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: subjectId
+          description: The id of the students's subject to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateSubjectPayload"
+        description: Information to update a student's subject.
+        required: true
+      responses:
+        "204":
+          description: Subject Updated
+        "500":
+          description: Service Error
+    delete:
+      tags:
+        - subjects
+      summary: Deletes one student's subject.
+      operationId: deleteSubject
+      parameters:
+        - in: path
+          name: id
+          description: The id of the student to delete the subject.
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: subjectId
+          description: The id of the subject to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Subject deleted
+        "500":
+          description: Service error
+
 components:
   schemas:
     Profile:
@@ -667,3 +805,60 @@ components:
         timeFrom:
           type: integer
           example: 1500
+    Subject:
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        subjectId:
+          type: string
+          format: uuid
+        programId:
+          type: string
+          format: uuid
+        score:
+          type: integer
+          example: 8
+        milestones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Milestones"
+    CreateSubjectPayload:
+      type: object
+      properties:
+        subjectId:
+          type: string
+          format: uuid
+        programId:
+          type: string
+          format: uuid
+        score:
+          type: integer
+          example: 8
+        milestones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Milestones"
+    Milestones:
+      type: object
+      properties:
+        milestoneType:
+          type: string
+          example: APPROVED
+        date:
+          type: string
+          example: 25-NOV-2020
+    UpdateSubjectPayload:
+      type: object
+      properties:
+        programId:
+          type: string
+          format: uuid
+        score:
+          type: integer
+          example: 8
+        milestones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Milestones"
