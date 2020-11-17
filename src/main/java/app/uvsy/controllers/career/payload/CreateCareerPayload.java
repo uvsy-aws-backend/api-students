@@ -2,8 +2,11 @@ package app.uvsy.controllers.career.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.Getter;
+import lombok.ToString;
 
-@Data
+@Getter
+@ToString
 public class CreateCareerPayload {
     private final String programId;
     private final int beginYear;
