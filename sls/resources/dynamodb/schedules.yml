@@ -1,0 +1,25 @@
+Resources:
+ SchedulesTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: ${self:provider.stage}-student-schedules
+      AttributeDefinitions:
+        - AttributeName: "schedule_scratch_id"
+          AttributeType: "S"
+        - AttributeName: "user_id"
+          AttributeType: "S"
+        - AttributeName: "program_id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "schedule_scratch_id"
+          KeyType: "HASH"
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+          - IndexName: UserProgramIndex
+            KeySchema:
+              - AttributeName: user_id
+                KeyType: HASH
+              - AttributeName: program_id
+                KeyType: RANGE
+            Projection:
+              ProjectionType: "ALL"

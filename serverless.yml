@@ -46,8 +46,9 @@ functions:
   - ${file(./sls/functions/api.yml)}
 
 resources:
- - ${file(./sls/resources/profile_dynamo_db_table.yml)}
- - ${file(./sls/resources/career_dynamo_db_table.yml)}
- - ${file(./sls/resources/note_dynamo_db_table.yml)}
- - ${file(./sls/resources/event_dynamo_db_table.yml)}
- - ${file(./sls/resources/subject_dynamo_db_table.yml)}
+  - ${file(./sls/resources/dynamodb/careers.yml)}
+  - ${file(./sls/resources/dynamodb/events.yml)}
+  - ${file(./sls/resources/dynamodb/notes.yml)}
+  - ${file(./sls/resources/dynamodb/profiles.yml)}
+  - ${file(./sls/resources/dynamodb/schedules.yml)}
+  - ${file(./sls/resources/dynamodb/subjects.yml)}
