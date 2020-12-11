@@ -12,12 +12,14 @@ provider:
     - Effect: "Allow"
       Action:
         - "dynamodb:*"
+        - "lambda:InvokeFunction"
       Resource: "*"
   environment:
     STAGE: ${self:provider.stage}
 
 plugins:
   - serverless-offline
+  - serverless-plugin-warmup
   - serverless-domain-manager
 
 
@@ -26,6 +28,16 @@ package:
 
 
 custom:
+
+  warmup:
+    cleanFolder: true
+    memorySize: 256
+    prewarm: true
+    enabled: true
+    timeout: 30
+    name: ${self:provider.stage}-students-warmup-plugin
+    events:
+      - schedule: 'cron(0/5 18-00 ? * MON-FRI *)'
 
   # Domain name configuration
   customDomain:
